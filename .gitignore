@@ -1,0 +1,40 @@
+# ---- Java / Gradle (backend) ----
+backend/build/
+backend/.gradle/
+backend/out/
+backend/bin/
+!backend/gradle/wrapper/gradle-wrapper.jar
+*.class
+*.jar
+!gradle-wrapper.jar
+
+# ---- Flutter / Dart (app) ----
+app/build/
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/.pub-cache/
+app/.pub/
+app/*.iml
+app/*.ipr
+app/*.iws
+
+# ---- IDE ----
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# ---- macOS ----
+.DS_Store
+
+# ---- Env / secrets ----
+.env
+docker/.env
+*.env.local
+
+# ---- Logs ----
+*.log
