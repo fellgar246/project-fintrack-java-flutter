@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      # Host 5435 -> el 5432 nativo de macOS y otros proyectos ya ocupan 5432-5434;
-      # el contenedor sigue escuchando en 5432 internamente.
+      # Host 5435 -> macOS's native Postgres and other projects already occupy 5432-5434;
+      # the container keeps listening on 5432 internally.
       - "5435:5432"
     volumes:
       - fintrack_pgdata:/var/lib/postgresql/data
@@ -19,8 +19,8 @@ services:
       timeout: 5s
       retries: 10
 
-  # Servicio de la API. Se activa con el profile "full" una vez que exista el Dockerfile (F7.1).
-  # En desarrollo, Spring Boot se corre desde el IDE contra el servicio `db` de arriba.
+  # API service. Activated with the "full" profile once the Dockerfile exists (F7.1).
+  # In development, Spring Boot is run from the IDE against the `db` service above.
   api:
     build:
       context: ../backend

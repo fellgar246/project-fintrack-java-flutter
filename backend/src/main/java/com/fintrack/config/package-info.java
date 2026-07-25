@@ -1,4 +1,4 @@
 /**
- * Seguridad, CORS, OpenAPI y demás beans de configuración transversal.
+ * Security, CORS, OpenAPI and other cross-cutting configuration beans.
  */
 package com.fintrack.config;

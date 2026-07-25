@@ -1,4 +1,4 @@
 /**
- * DTOs base, excepciones y utilidades de paginación compartidas entre módulos.
+ * Base DTOs, exceptions and pagination utilities shared across modules.
  */
 package com.fintrack.common;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Pantalla provisional de la Fase 0: solo confirma que la ruta navega.
-/// Cada feature reemplaza esto por su UI real en su propia fase.
+/// Provisional Phase 0 screen: only confirms that the route navigates.
+/// Each feature replaces this with its real UI in its own phase.
 class PlaceholderScreen extends StatelessWidget {
   const PlaceholderScreen({super.key, required this.title});
 

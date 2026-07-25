@@ -1,4 +1,4 @@
 /**
- * Perfil de usuario.
+ * User profile.
  */
 package com.fintrack.user;

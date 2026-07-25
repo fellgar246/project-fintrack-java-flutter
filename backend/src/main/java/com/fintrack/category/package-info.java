@@ -1,4 +1,4 @@
 /**
- * Categorías de ingreso/gasto.
+ * Income/expense categories.
  */
 package com.fintrack.category;

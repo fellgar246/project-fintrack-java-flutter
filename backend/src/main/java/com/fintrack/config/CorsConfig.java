@@ -6,8 +6,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Permite el cliente Flutter (web/desktop) en desarrollo local. En producción esto se
- * restringe a los orígenes reales (fuera de alcance de v1, ver PLAN_MAESTRO_FINTRACK.md §1.3).
+ * Allows the Flutter client (web/desktop) in local development. In production this is
+ * restricted to the real origins (out of scope for v1, see PLAN_MAESTRO_FINTRACK.md §1.3).
  */
 @Configuration
 public class CorsConfig {

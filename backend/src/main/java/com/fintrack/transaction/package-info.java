@@ -1,4 +1,4 @@
 /**
- * Transacciones: ingresos, gastos y transferencias entre cuentas propias (núcleo del dominio).
+ * Transactions: income, expenses and transfers between own accounts (domain core).
  */
 package com.fintrack.transaction;

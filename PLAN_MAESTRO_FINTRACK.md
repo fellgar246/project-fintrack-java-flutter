@@ -87,6 +87,9 @@ Cada feature: `data/ (api + models) → providers/ (Riverpod) → presentation/ 
 - Montos como `DECIMAL(14,2)` en BD, `BigDecimal` en Java, `String`→`Decimal` en Dart (paquete `decimal`). **Nunca float/double para dinero.**
 - Errores API con formato uniforme (RFC 7807 Problem Details).
 - IDs: `UUID` v4.
+- **Comentarios de código (Java, Dart, SQL, YAML) siempre en inglés**, sin importar que el resto
+  del spec, el UI y los mensajes de commit estén en español. Aplica a Javadoc/dartdoc, comentarios
+  de línea y de bloque en cualquier archivo fuente.
 
 ---
 
@@ -358,3 +361,4 @@ Cada tarea (`Fx.y`) está pensada para ser un prompt independiente al IDE. Orden
 | Fecha | Versión | Cambio |
 |---|---|---|
 | 2026-07-25 | 1.0 | Versión inicial |
+| 2026-07-25 | 1.1 | §2.4: comentarios de código siempre en inglés |

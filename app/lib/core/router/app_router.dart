@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../shared/widgets/placeholder_screen.dart';
 
-/// Rutas de navegación (§5.1 del plan maestro). `/login` y `/register` quedan
-/// fuera del shell; el resto vive bajo el shell con bottom nav.
+/// Navigation routes (§5.1 of the master plan). `/login` and `/register` stay
+/// outside the shell; everything else lives under the shell with bottom nav.
 final GoRouter appRouter = GoRouter(
   initialLocation: '/dashboard',
   routes: [

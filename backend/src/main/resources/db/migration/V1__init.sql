@@ -1,5 +1,5 @@
--- Fase 0 (F0.4): esquema inicial de FinTrack. Ver PLAN_MAESTRO_FINTRACK.md §3.2.
--- Regla de trabajo: una migración ya aplicada NO se edita; se corrige con otra encima.
+-- Phase 0 (F0.4): FinTrack's initial schema. See PLAN_MAESTRO_FINTRACK.md §3.2.
+-- Working rule: an already-applied migration is NEVER edited; fix it with a new one on top.
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 

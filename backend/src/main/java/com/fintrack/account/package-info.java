@@ -1,4 +1,4 @@
 /**
- * Cuentas (efectivo, débito, crédito, ahorro) y su saldo calculado (RB-01).
+ * Accounts (cash, debit, credit, savings) and their computed balance (RB-01).
  */
 package com.fintrack.account;

@@ -52,6 +52,11 @@ no cumple su checklist.
 
 ## 3. Convenciones que aplican a todo (§2.4 del maestro)
 
+### Idioma
+- **Comentarios de código (Java, Dart, SQL, YAML) siempre en inglés** — Javadoc/dartdoc,
+  comentarios de línea y de bloque. El resto (spec, UI, mensajes de commit, nombres de rutas/
+  branches) se mantiene en español.
+
 ### Backend
 - Paquete raíz `com.fintrack`. Un paquete por módulo de dominio (§2.2).
 - Capas: `Controller → Service → Repository → Entity`. El controller **nunca** toca el repositorio.

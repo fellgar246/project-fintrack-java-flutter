@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 
 import '../constants/api_constants.dart';
 
-/// Cliente Dio compartido por toda la app. Los interceptores de auth
-/// (adjuntar access token, refresh automático en 401) se agregan en F1.4.
+/// Dio client shared across the app. Auth interceptors
+/// (attach access token, auto-refresh on 401) are added in F1.4.
 class DioClient {
   DioClient._();
 

@@ -10,9 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Base de seguridad de la Fase 0: sin JWT todavía (llega en F1.2). Deja abiertos solo
- * actuator/health y la documentación OpenAPI; el resto queda protegido por defecto para que
- * el filtro JWT de F1.2 se enganche aquí sin tener que reabrir rutas.
+ * Phase 0 security baseline: no JWT yet (arrives in F1.2). Only actuator/health and the
+ * OpenAPI docs are left open; everything else is protected by default so the F1.2 JWT
+ * filter can hook in here without having to reopen routes.
  */
 @Configuration
 @EnableWebSecurity

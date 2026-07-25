@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Tema Material 3 de FinTrack: mismo seed color para claro y oscuro,
-/// alternando según el tema del sistema (ver [ThemeMode.system] en main.dart).
+/// FinTrack's Material 3 theme: same seed color for light and dark,
+/// switching based on the system theme (see [ThemeMode.system] in main.dart).
 class AppTheme {
   AppTheme._();
 
