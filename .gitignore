@@ -38,3 +38,7 @@ docker/.env
 
 # ---- Logs ----
 *.log
+
+# ---- Planning docs (kept local, not pushed to the repo) ----
+/PLAN_MAESTRO_FINTRACK.md
+/plans/
