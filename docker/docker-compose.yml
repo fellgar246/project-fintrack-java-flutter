@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16
+    container_name: fintrack-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # Host 5435 -> el 5432 nativo de macOS y otros proyectos ya ocupan 5432-5434;
+      # el contenedor sigue escuchando en 5432 internamente.
+      - "5435:5432"
+    volumes:
+      - fintrack_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Servicio de la API. Se activa con el profile "full" una vez que exista el Dockerfile (F7.1).
+  # En desarrollo, Spring Boot se corre desde el IDE contra el servicio `db` de arriba.
+  api:
+    build:
+      context: ../backend
+    container_name: fintrack-api
+    restart: unless-stopped
+    profiles: ["full"]
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_TTL_MIN: ${JWT_ACCESS_TTL_MIN}
+      JWT_REFRESH_TTL_DAYS: ${JWT_REFRESH_TTL_DAYS}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  fintrack_pgdata:
