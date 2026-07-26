@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(
@@ -36,16 +38,17 @@ public class Category {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private String kind;
 
-    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(nullable = false, length = 7)
     private String color;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private String icon;
 
     @Column(nullable = false)
