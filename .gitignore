@@ -27,6 +27,7 @@ app/*.iws
 .classpath
 .project
 .settings/
+.claude/
 
 # ---- macOS ----
 .DS_Store
@@ -41,4 +42,5 @@ docker/.env
 
 # ---- Planning docs (kept local, not pushed to the repo) ----
 /PLAN_MAESTRO_FINTRACK.md
+/CONCEPTOS.md
 /plans/

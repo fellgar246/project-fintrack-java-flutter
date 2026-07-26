@@ -8,18 +8,18 @@ void main() {
   runApp(const ProviderScope(child: FintrackApp()));
 }
 
-class FintrackApp extends StatelessWidget {
+class FintrackApp extends ConsumerWidget {
   const FintrackApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       title: 'FinTrack',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      routerConfig: appRouter,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
