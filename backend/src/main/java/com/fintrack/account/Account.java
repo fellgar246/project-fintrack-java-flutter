@@ -1,4 +1,4 @@
-package com.fintrack.category;
+package com.fintrack.account;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,21 +9,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(
-    name = "categories",
+    name = "accounts",
     uniqueConstraints = @UniqueConstraint(
-        columnNames = {"user_id", "name", "kind"},
-        name = "uq_categories_user_name_kind"
+        columnNames = {"user_id", "name"},
+        name = "uq_accounts_user_name"
     )
 )
 @Getter
@@ -31,7 +31,7 @@ import org.hibernate.type.SqlTypes;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,20 +40,19 @@ public class Category {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private CategoryKind kind;
+    @Column(nullable = false, length = 20)
+    private AccountType type;
 
-    @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(nullable = false, length = 7)
-    private String color;
-
-    @Column(nullable = false, length = 40)
-    private String icon;
+    @Column(name = "initial_balance", nullable = false, precision = 14, scale = 2)
+    private BigDecimal initialBalance;
 
     @Column(nullable = false)
     private Boolean archived;
+
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 }

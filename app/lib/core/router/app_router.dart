@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/accounts/presentation/accounts_screen.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/register_screen.dart';
-import '../../features/auth/presentation/widgets/logout_button.dart';
 import '../../features/auth/providers/auth_controller.dart';
 import '../../features/auth/providers/auth_state.dart';
+import '../../features/categories/presentation/categories_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
 
@@ -109,20 +111,15 @@ GoRouter buildRouter(Ref ref) {
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/settings',
-            builder: (context, state) => const PlaceholderScreen(
-              title: 'Ajustes',
-              footer: LogoutButton(),
-            ),
+            builder: (context, state) => const SettingsScreen(),
             routes: [
               GoRoute(
                 path: 'accounts',
-                builder: (context, state) =>
-                    const PlaceholderScreen(title: 'Cuentas'),
+                builder: (context, state) => const AccountsScreen(),
               ),
               GoRoute(
                 path: 'categories',
-                builder: (context, state) =>
-                    const PlaceholderScreen(title: 'Categorías'),
+                builder: (context, state) => const CategoriesScreen(),
               ),
             ],
           ),
