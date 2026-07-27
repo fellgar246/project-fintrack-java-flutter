@@ -74,6 +74,11 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.FORBIDDEN, "Forbidden", "You don't have permission to access this resource", request, null);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex, HttpServletRequest request) {
+        return build(HttpStatus.BAD_REQUEST, ex.getTitle(), ex.getMessage(), request, null);
+    }
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException ex, HttpServletRequest request) {
         return build(HttpStatus.NOT_FOUND, ex.getTitle(), ex.getMessage(), request, null);
