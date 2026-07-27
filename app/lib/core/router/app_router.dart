@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/accounts/presentation/accounts_screen.dart';
+import '../../features/budgets/presentation/budgets_screen.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/register_screen.dart';
 import '../../features/auth/providers/auth_controller.dart';
@@ -97,8 +98,7 @@ GoRouter buildRouter(Ref ref) {
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/budgets',
-            builder: (context, state) =>
-                const PlaceholderScreen(title: 'Presupuestos'),
+            builder: (context, state) => const BudgetsScreen(),
           ),
         ]),
         StatefulShellBranch(routes: [

@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../accounts/providers/accounts_provider.dart';
+import '../../budgets/providers/budgets_provider.dart';
 import '../data/models/transaction_model.dart';
 import '../data/models/transaction_request.dart';
 import '../data/transactions_api.dart';
@@ -291,6 +292,7 @@ class TransactionFormController extends AutoDisposeFamilyNotifier<TransactionFor
 
       ref.invalidate(transactionsListProvider);
       ref.invalidate(accountsControllerProvider);
+      invalidateVisibleBudgets(ref);
 
       state = state.copyWith(isSubmitting: false);
     } catch (_) {
@@ -312,6 +314,7 @@ class TransactionFormController extends AutoDisposeFamilyNotifier<TransactionFor
       await ref.read(transactionsApiProvider).delete(state.transactionId!);
       ref.invalidate(transactionsListProvider);
       ref.invalidate(accountsControllerProvider);
+      invalidateVisibleBudgets(ref);
       state = state.copyWith(isSubmitting: false);
     } on Exception catch (_) {
       state = state.copyWith(isSubmitting: false);

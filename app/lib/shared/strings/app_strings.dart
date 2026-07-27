@@ -110,4 +110,28 @@ class AppStrings {
       '¿Eliminar este movimiento? El saldo de la cuenta se actualizará.';
   static const sameAccountError = 'La cuenta origen y destino deben ser distintas';
   static const uncategorized = 'Sin categoría';
+
+  // Budgets
+  static const budgetsTitle = 'Presupuestos';
+  static const budgetsEmpty = 'Aún no tienes presupuestos para este mes';
+  static const createFirstBudget = 'Define tu primer presupuesto';
+  static const newBudgetTitle = 'Nuevo presupuesto';
+  static const editBudgetTitle = 'Editar presupuesto';
+  static const budgetLimitLabel = 'Límite mensual';
+  static const defineBudget = 'Definir';
+  static const budgetSummaryTitle = 'Resumen del mes';
+  static const budgetTotalLimit = 'Presupuestado';
+  static const budgetTotalSpent = 'Gastado';
+  static const budgetAvailable = 'Disponible';
+  static const budgetUsedLabel = 'usado';
+  static const budgetByCategory = 'Por categoría';
+  static const unbudgetedSection = 'Sin presupuesto';
+  static const copyFromPreviousMonth = 'Copiar del mes anterior';
+  static const budgetsCopied = 'Presupuestos copiados del mes anterior';
+  static const deleteBudgetTitle = 'Eliminar presupuesto';
+  static const categoryRequired = 'Elige una categoría';
+  static String budgetRemaining(String amount) => 'Te quedan $amount';
+  static String budgetOver(String amount) => 'Te pasaste por $amount';
+  static String deleteBudgetMessage(String name) =>
+      '¿Eliminar el presupuesto de "$name"?';
 }
