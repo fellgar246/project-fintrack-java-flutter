@@ -9,6 +9,8 @@ import '../../features/auth/providers/auth_controller.dart';
 import '../../features/auth/providers/auth_state.dart';
 import '../../features/categories/presentation/categories_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/transactions/presentation/transaction_form_screen.dart';
+import '../../features/transactions/presentation/transactions_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
 
@@ -77,18 +79,16 @@ GoRouter buildRouter(Ref ref) {
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/transactions',
-            builder: (context, state) =>
-                const PlaceholderScreen(title: 'Transacciones'),
+            builder: (context, state) => const TransactionsScreen(),
             routes: [
               GoRoute(
                 path: 'new',
-                builder: (context, state) =>
-                    const PlaceholderScreen(title: 'Nueva transacción'),
+                builder: (context, state) => const TransactionFormScreen(),
               ),
               GoRoute(
                 path: ':id',
-                builder: (context, state) => PlaceholderScreen(
-                  title: 'Transacción ${state.pathParameters['id']}',
+                builder: (context, state) => TransactionFormScreen(
+                  transactionId: state.pathParameters['id'],
                 ),
               ),
             ],

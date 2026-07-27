@@ -80,4 +80,34 @@ class AppStrings {
   static const cancelButton = 'Cancelar';
   static const deleteAction = 'Eliminar';
   static const amountRequired = 'Ingresa un monto';
+
+  // Transactions
+  static const transactionsTitle = 'Transacciones';
+  static const newTransactionTitle = 'Nueva transacción';
+  static const editTransactionTitle = 'Editar transacción';
+  static const expenseType = 'Gasto';
+  static const incomeType = 'Ingreso';
+  static const transferType = 'Transferencia';
+  static const categoryLabel = 'Categoría';
+  static const accountLabel = 'Cuenta';
+  static const transferAccountLabel = 'Cuenta destino';
+  static const dateLabel = 'Fecha';
+  static const todayLabel = 'Hoy';
+  static const yesterdayLabel = 'Ayer';
+  static const pickDateLabel = 'Elegir fecha';
+  static const noteLabel = 'Nota';
+  static const searchTransactions = 'Buscar movimientos';
+  static const filterType = 'Tipo';
+  static const filterAccount = 'Cuenta';
+  static const filterCategory = 'Categoría';
+  static const clearAllFilters = 'Limpiar todo';
+  static const transactionsEmpty = 'Aún no registras movimientos';
+  static const transactionsEmptyFiltered = 'No hay resultados para estos filtros';
+  static const registerFirstTransaction = 'Registrar movimiento';
+  static const noMoreTransactions = 'No hay más movimientos';
+  static const deleteTransactionTitle = 'Eliminar transacción';
+  static const deleteTransactionMessage =
+      '¿Eliminar este movimiento? El saldo de la cuenta se actualizará.';
+  static const sameAccountError = 'La cuenta origen y destino deben ser distintas';
+  static const uncategorized = 'Sin categoría';
 }
