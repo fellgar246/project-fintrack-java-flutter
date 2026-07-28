@@ -15,10 +15,10 @@ import lombok.Setter;
 @Builder
 public class CategoryResponse {
 
-    private UUID id;
-    private String name;
-    private CategoryKind kind;
-    private String color;
-    private String icon;
-    private boolean archived;
+  private UUID id;
+  private String name;
+  private CategoryKind kind;
+  private String color;
+  private String icon;
+  private boolean archived;
 }

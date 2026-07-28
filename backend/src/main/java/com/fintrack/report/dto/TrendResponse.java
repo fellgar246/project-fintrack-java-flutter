@@ -13,8 +13,8 @@ import lombok.Setter;
 @Builder
 public class TrendResponse {
 
-    private String yearMonth;
-    private String income;
-    private String expense;
-    private String net;
+  private String yearMonth;
+  private String income;
+  private String expense;
+  private String net;
 }

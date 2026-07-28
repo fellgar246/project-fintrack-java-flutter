@@ -63,7 +63,7 @@ class AsyncListScaffold extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(AppStrings.genericError, textAlign: TextAlign.center),
+              const Text(AppStrings.genericError, textAlign: TextAlign.center),
               const SizedBox(height: 16),
               FilledButton(onPressed: onRetry, child: const Text(AppStrings.retryButton)),
             ],

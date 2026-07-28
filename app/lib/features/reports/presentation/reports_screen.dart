@@ -79,11 +79,11 @@ class ReportsScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             SegmentedButton<ReportKind>(
               segments: [
-                ButtonSegment(
+                const ButtonSegment(
                   value: ReportKind.expense,
                   label: Text(AppStrings.expenseTab),
                 ),
-                ButtonSegment(
+                const ButtonSegment(
                   value: ReportKind.income,
                   label: Text(AppStrings.incomeTab),
                 ),
@@ -98,7 +98,7 @@ class ReportsScreen extends ConsumerWidget {
             const SizedBox(height: 12),
             byCategoryAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (_, __) => Center(
+              error: (_, _) => Center(
                 child: FilledButton(
                   onPressed: () => ref.invalidate(byCategoryProvider(categoryKey)),
                   child: const Text(AppStrings.retryButton),
@@ -106,7 +106,7 @@ class ReportsScreen extends ConsumerWidget {
               ),
               data: (categories) {
                 if (categories.isEmpty) {
-                  return _EmptyChartMessage(message: AppStrings.reportsNoData);
+                  return const _EmptyChartMessage(message: AppStrings.reportsNoData);
                 }
 
                 final slices = buildCategorySlices(categories);
@@ -145,7 +145,7 @@ class ReportsScreen extends ConsumerWidget {
             const SizedBox(height: 12),
             trendAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (_, __) => Center(
+              error: (_, _) => Center(
                 child: FilledButton(
                   onPressed: () => ref.invalidate(trendProvider(trendMonths)),
                   child: const Text(AppStrings.retryButton),
@@ -157,7 +157,7 @@ class ReportsScreen extends ConsumerWidget {
                       row.incomeDecimal > Decimal.zero || row.expenseDecimal > Decimal.zero,
                 );
                 if (!hasData) {
-                  return _EmptyChartMessage(message: AppStrings.reportsNoData);
+                  return const _EmptyChartMessage(message: AppStrings.reportsNoData);
                 }
                 return TrendBarChart(trend: trend);
               },

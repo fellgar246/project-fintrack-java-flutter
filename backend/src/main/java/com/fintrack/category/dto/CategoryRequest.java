@@ -18,18 +18,17 @@ import lombok.Setter;
 @Builder
 public class CategoryRequest {
 
-    @NotBlank
-    @Size(max = 60)
-    private String name;
+  @NotBlank
+  @Size(max = 60)
+  private String name;
 
-    @NotNull
-    private CategoryKind kind;
+  @NotNull private CategoryKind kind;
 
-    @NotBlank
-    @Pattern(regexp = "^#[0-9A-Fa-f]{6}$", message = "Must be a hex color in #RRGGBB format")
-    private String color;
+  @NotBlank
+  @Pattern(regexp = "^#[0-9A-Fa-f]{6}$", message = "Must be a hex color in #RRGGBB format")
+  private String color;
 
-    @NotBlank
-    @Size(max = 40)
-    private String icon;
+  @NotBlank
+  @Size(max = 40)
+  private String icon;
 }

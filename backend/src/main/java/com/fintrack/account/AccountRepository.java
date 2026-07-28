@@ -19,50 +19,65 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
 
   boolean existsByUserIdAndNameIgnoreCaseAndIdNot(UUID userId, String name, UUID id);
 
-  @Query(value = """
+  @Query(
+      value =
+          """
       SELECT a.id AS id,
              a.name AS name,
              a.type AS type,
              a.initial_balance AS initialBalance,
              a.archived AS archived,
              a.created_at AS createdAt,
-             """ + AccountBalanceSql.CURRENT_BALANCE_EXPR + """
+             """
+              + AccountBalanceSql.CURRENT_BALANCE_EXPR
+              + """
              AS currentBalance
       FROM accounts a
-      """ + AccountBalanceSql.TRANSACTION_JOIN + """
+      """
+              + AccountBalanceSql.TRANSACTION_JOIN
+              + """
       WHERE a.user_id = :userId
         AND (:includeArchived = true OR a.archived = false)
       GROUP BY a.id, a.name, a.type, a.initial_balance, a.archived, a.created_at
       ORDER BY a.name ASC
-      """, nativeQuery = true)
+      """,
+      nativeQuery = true)
   List<AccountBalanceRow> findAllWithBalance(
-      @Param("userId") UUID userId,
-      @Param("includeArchived") boolean includeArchived);
+      @Param("userId") UUID userId, @Param("includeArchived") boolean includeArchived);
 
-  @Query(value = """
+  @Query(
+      value =
+          """
       SELECT a.id AS id,
              a.name AS name,
              a.type AS type,
              a.initial_balance AS initialBalance,
              a.archived AS archived,
              a.created_at AS createdAt,
-             """ + AccountBalanceSql.CURRENT_BALANCE_EXPR + """
+             """
+              + AccountBalanceSql.CURRENT_BALANCE_EXPR
+              + """
              AS currentBalance
       FROM accounts a
-      """ + AccountBalanceSql.TRANSACTION_JOIN + """
+      """
+              + AccountBalanceSql.TRANSACTION_JOIN
+              + """
       WHERE a.user_id = :userId
         AND a.id = :accountId
       GROUP BY a.id, a.name, a.type, a.initial_balance, a.archived, a.created_at
-      """, nativeQuery = true)
+      """,
+      nativeQuery = true)
   Optional<AccountBalanceRow> findOneWithBalance(
-      @Param("userId") UUID userId,
-      @Param("accountId") UUID accountId);
+      @Param("userId") UUID userId, @Param("accountId") UUID accountId);
 
-  @Query(value = """
+  @Query(
+      value =
+          """
       SELECT COUNT(*) > 0
       FROM transactions t
       WHERE t.user_id = :userId
         AND (t.account_id = :accountId OR t.transfer_account_id = :accountId)
-      """, nativeQuery = true)
+      """,
+      nativeQuery = true)
   boolean hasTransactions(@Param("userId") UUID userId, @Param("accountId") UUID accountId);
 }

@@ -21,11 +21,10 @@ import lombok.Setter;
 @Entity
 @Table(
     name = "accounts",
-    uniqueConstraints = @UniqueConstraint(
-        columnNames = {"user_id", "name"},
-        name = "uq_accounts_user_name"
-    )
-)
+    uniqueConstraints =
+        @UniqueConstraint(
+            columnNames = {"user_id", "name"},
+            name = "uq_accounts_user_name"))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,26 +32,26 @@ import lombok.Setter;
 @Builder
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+  @Column(name = "user_id", nullable = false)
+  private UUID userId;
 
-    @Column(nullable = false, length = 100)
-    private String name;
+  @Column(nullable = false, length = 100)
+  private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private AccountType type;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
+  private AccountType type;
 
-    @Column(name = "initial_balance", nullable = false, precision = 14, scale = 2)
-    private BigDecimal initialBalance;
+  @Column(name = "initial_balance", nullable = false, precision = 14, scale = 2)
+  private BigDecimal initialBalance;
 
-    @Column(nullable = false)
-    private Boolean archived;
+  @Column(nullable = false)
+  private Boolean archived;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+  @Column(name = "created_at", nullable = false)
+  private Instant createdAt;
 }

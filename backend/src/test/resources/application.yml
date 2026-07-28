@@ -1,0 +1,12 @@
+app:
+  jwt:
+    secret: test-jwt-secret-at-least-32-bytes-long!!
+    access-ttl-min: 15
+    refresh-ttl-days: 7
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true

@@ -10,9 +10,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReportRepository extends JpaRepository<com.fintrack.transaction.Transaction, UUID> {
+public interface ReportRepository
+    extends JpaRepository<com.fintrack.transaction.Transaction, UUID> {
 
-    @Query(value = """
+  @Query(
+      value =
+          """
         WITH account_monthly AS (
             SELECT a.id AS accountId,
                    a.name AS name,
@@ -28,10 +31,14 @@ public interface ReportRepository extends JpaRepository<com.fintrack.transaction
                         AND t.date < :monthEnd
                         AND t.account_id = a.id
                        THEN t.amount END), 0) AS expense,
-                   """ + AccountBalanceSql.CURRENT_BALANCE_EXPR + """
+                   """
+              + AccountBalanceSql.CURRENT_BALANCE_EXPR
+              + """
                    AS currentBalance
             FROM accounts a
-            """ + AccountBalanceSql.TRANSACTION_JOIN + """
+            """
+              + AccountBalanceSql.TRANSACTION_JOIN
+              + """
             WHERE a.user_id = :userId
               AND a.archived = false
             GROUP BY a.id, a.name, a.initial_balance
@@ -45,14 +52,16 @@ public interface ReportRepository extends JpaRepository<com.fintrack.transaction
                SUM(expense) OVER () AS totalExpense
         FROM account_monthly
         ORDER BY name ASC
-        """, nativeQuery = true)
-    List<SummaryAccountRow> findSummaryForMonth(
-        @Param("userId") UUID userId,
-        @Param("monthStart") LocalDate monthStart,
-        @Param("monthEnd") LocalDate monthEnd
-    );
+        """,
+      nativeQuery = true)
+  List<SummaryAccountRow> findSummaryForMonth(
+      @Param("userId") UUID userId,
+      @Param("monthStart") LocalDate monthStart,
+      @Param("monthEnd") LocalDate monthEnd);
 
-    @Query(value = """
+  @Query(
+      value =
+          """
         SELECT c.id AS categoryId,
                c.name AS name,
                c.color AS color,
@@ -69,15 +78,17 @@ public interface ReportRepository extends JpaRepository<com.fintrack.transaction
           AND t.date < :monthEnd
         GROUP BY c.id, c.name, c.color, c.icon
         ORDER BY total DESC
-        """, nativeQuery = true)
-    List<ByCategoryRow> findByCategoryForMonth(
-        @Param("userId") UUID userId,
-        @Param("kind") String kind,
-        @Param("monthStart") LocalDate monthStart,
-        @Param("monthEnd") LocalDate monthEnd
-    );
+        """,
+      nativeQuery = true)
+  List<ByCategoryRow> findByCategoryForMonth(
+      @Param("userId") UUID userId,
+      @Param("kind") String kind,
+      @Param("monthStart") LocalDate monthStart,
+      @Param("monthEnd") LocalDate monthEnd);
 
-    @Query(value = """
+  @Query(
+      value =
+          """
         WITH months AS (
             SELECT CAST(d AS date) AS month_start,
                    to_char(d, 'YYYY-MM') AS year_month
@@ -98,10 +109,10 @@ public interface ReportRepository extends JpaRepository<com.fintrack.transaction
               AND t.type IN ('INCOME', 'EXPENSE')
         GROUP BY m.year_month, m.month_start
         ORDER BY m.month_start ASC
-        """, nativeQuery = true)
-    List<TrendRow> findTrend(
-        @Param("userId") UUID userId,
-        @Param("seriesStart") LocalDate seriesStart,
-        @Param("seriesEnd") LocalDate seriesEnd
-    );
+        """,
+      nativeQuery = true)
+  List<TrendRow> findTrend(
+      @Param("userId") UUID userId,
+      @Param("seriesStart") LocalDate seriesStart,
+      @Param("seriesEnd") LocalDate seriesEnd);
 }

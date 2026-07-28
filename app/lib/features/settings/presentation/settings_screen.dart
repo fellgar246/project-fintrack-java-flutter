@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
       body: authState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, _) => Center(child: Text(AppStrings.genericError)),
+        error: (_, _) => const Center(child: Text(AppStrings.genericError)),
         data: (state) => state.maybeWhen(
           authenticated: (user) => ListView(
             children: [
@@ -69,7 +69,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ],
           ),
-          orElse: () => Center(child: Text(AppStrings.genericError)),
+          orElse: () => const Center(child: Text(AppStrings.genericError)),
         ),
       ),
     );

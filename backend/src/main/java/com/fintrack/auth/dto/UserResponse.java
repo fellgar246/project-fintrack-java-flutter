@@ -15,9 +15,9 @@ import lombok.Setter;
 @Builder
 public class UserResponse {
 
-    private UUID id;
-    private String email;
-    private String name;
-    private String baseCurrency;
-    private Instant createdAt;
+  private UUID id;
+  private String email;
+  private String name;
+  private String baseCurrency;
+  private Instant createdAt;
 }

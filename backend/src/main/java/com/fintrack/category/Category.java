@@ -21,11 +21,10 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Table(
     name = "categories",
-    uniqueConstraints = @UniqueConstraint(
-        columnNames = {"user_id", "name", "kind"},
-        name = "uq_categories_user_name_kind"
-    )
-)
+    uniqueConstraints =
+        @UniqueConstraint(
+            columnNames = {"user_id", "name", "kind"},
+            name = "uq_categories_user_name_kind"))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,27 +32,27 @@ import org.hibernate.type.SqlTypes;
 @Builder
 public class Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+  @Column(name = "user_id", nullable = false)
+  private UUID userId;
 
-    @Column(nullable = false, length = 60)
-    private String name;
+  @Column(nullable = false, length = 60)
+  private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private CategoryKind kind;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 10)
+  private CategoryKind kind;
 
-    @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(nullable = false, length = 7)
-    private String color;
+  @JdbcTypeCode(SqlTypes.CHAR)
+  @Column(nullable = false, length = 7)
+  private String color;
 
-    @Column(nullable = false, length = 40)
-    private String icon;
+  @Column(nullable = false, length = 40)
+  private String icon;
 
-    @Column(nullable = false)
-    private Boolean archived;
+  @Column(nullable = false)
+  private Boolean archived;
 }

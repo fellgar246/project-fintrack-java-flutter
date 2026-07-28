@@ -14,8 +14,8 @@ import lombok.Setter;
 @Builder
 public class TransactionCategorySummary {
 
-    private UUID id;
-    private String name;
-    private String color;
-    private String icon;
+  private UUID id;
+  private String name;
+  private String color;
+  private String icon;
 }

@@ -1,4 +1,2 @@
-/**
- * Monthly budgets per category.
- */
+/** Monthly budgets per category. */
 package com.fintrack.budget;

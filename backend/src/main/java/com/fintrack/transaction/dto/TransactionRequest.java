@@ -19,22 +19,18 @@ import lombok.Setter;
 @Builder
 public class TransactionRequest {
 
-    @NotNull
-    private TransactionType type;
+  @NotNull private TransactionType type;
 
-    @NotBlank
-    private String amount;
+  @NotBlank private String amount;
 
-    @NotNull
-    private LocalDate date;
+  @NotNull private LocalDate date;
 
-    @NotNull
-    private UUID accountId;
+  @NotNull private UUID accountId;
 
-    private UUID categoryId;
+  private UUID categoryId;
 
-    private UUID transferAccountId;
+  private UUID transferAccountId;
 
-    @Size(max = 255)
-    private String note;
+  @Size(max = 255)
+  private String note;
 }

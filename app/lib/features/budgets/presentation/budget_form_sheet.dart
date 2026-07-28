@@ -122,7 +122,7 @@ class _BudgetFormSheetState extends ConsumerState<BudgetFormSheet> {
                 const SizedBox(height: 8),
                 categoriesAsync.when(
                   loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (_, _) => Text(AppStrings.genericError),
+                  error: (_, _) => const Text(AppStrings.genericError),
                   data: (categories) => CategoryPickerGrid(
                     categories: categories,
                     selectedId: _selectedCategoryId,
@@ -138,7 +138,7 @@ class _BudgetFormSheetState extends ConsumerState<BudgetFormSheet> {
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
                     backgroundColor: _parseColor(widget.budget!.category.color),
-                    child: Icon(Icons.category, color: Colors.white),
+                    child: const Icon(Icons.category, color: Colors.white),
                   ),
                   title: Text(widget.budget!.category.name),
                 ),

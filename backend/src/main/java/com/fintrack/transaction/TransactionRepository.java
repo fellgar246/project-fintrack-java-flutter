@@ -11,12 +11,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, UUID>, JpaSpecificationExecutor<Transaction> {
+public interface TransactionRepository
+    extends JpaRepository<Transaction, UUID>, JpaSpecificationExecutor<Transaction> {
 
-    @EntityGraph(Transaction.WITH_RELATIONS)
-    Optional<Transaction> findByIdAndUserId(UUID id, UUID userId);
+  @EntityGraph(Transaction.WITH_RELATIONS)
+  Optional<Transaction> findByIdAndUserId(UUID id, UUID userId);
 
-    @Override
-    @EntityGraph(Transaction.WITH_RELATIONS)
-    Page<Transaction> findAll(Specification<Transaction> spec, Pageable pageable);
+  @Override
+  @EntityGraph(Transaction.WITH_RELATIONS)
+  Page<Transaction> findAll(Specification<Transaction> spec, Pageable pageable);
 }

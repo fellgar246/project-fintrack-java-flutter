@@ -44,7 +44,7 @@ class DashboardScreen extends ConsumerWidget {
         },
         child: dashboardAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (_, __) => Center(
+          error: (_, _) => Center(
             child: FilledButton(
               onPressed: () => ref.invalidate(dashboardProvider),
               child: const Text(AppStrings.retryButton),
@@ -67,7 +67,7 @@ class DashboardScreen extends ConsumerWidget {
                   loading: () => const Card(
                     child: SizedBox(height: 100, child: Center(child: CircularProgressIndicator())),
                   ),
-                  error: (_, __) => _InlineError(
+                  error: (_, _) => _InlineError(
                     onRetry: () => _retrySummary(ref),
                   ),
                   data: (summary) => Column(

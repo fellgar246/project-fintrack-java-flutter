@@ -14,23 +14,23 @@ import lombok.Setter;
 @Builder
 public class SummaryResponse {
 
-    private String yearMonth;
-    private String totalIncome;
-    private String totalExpense;
-    private String net;
-    private List<AccountSummaryItem> byAccount;
+  private String yearMonth;
+  private String totalIncome;
+  private String totalExpense;
+  private String net;
+  private List<AccountSummaryItem> byAccount;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class AccountSummaryItem {
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class AccountSummaryItem {
 
-        private java.util.UUID accountId;
-        private String name;
-        private String income;
-        private String expense;
-        private String currentBalance;
-    }
+    private java.util.UUID accountId;
+    private String name;
+    private String income;
+    private String expense;
+    private String currentBalance;
+  }
 }

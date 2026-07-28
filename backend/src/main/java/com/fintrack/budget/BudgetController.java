@@ -25,42 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Budgets")
 public class BudgetController {
 
-    private final BudgetService budgetService;
+  private final BudgetService budgetService;
 
-    public BudgetController(BudgetService budgetService) {
-        this.budgetService = budgetService;
-    }
+  public BudgetController(BudgetService budgetService) {
+    this.budgetService = budgetService;
+  }
 
-    @GetMapping
-    @Operation(description = "Lists budgets for a month with spent amounts. Defaults to the current month.")
-    public List<BudgetResponse> list(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @RequestParam(required = false) String yearMonth,
-        @RequestParam(defaultValue = "false") boolean includeUnbudgeted
-    ) {
-        return budgetService.list(currentUser.id(), yearMonth, includeUnbudgeted);
-    }
+  @GetMapping
+  @Operation(
+      description = "Lists budgets for a month with spent amounts. Defaults to the current month.")
+  public List<BudgetResponse> list(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @RequestParam(required = false) String yearMonth,
+      @RequestParam(defaultValue = "false") boolean includeUnbudgeted) {
+    return budgetService.list(currentUser.id(), yearMonth, includeUnbudgeted);
+  }
 
-    @PutMapping
-    @Operation(
-        summary = "Create or update a budget",
-        description = "Upserts by (categoryId, yearMonth). Returns 200 for both create and update (no 201)."
-    )
-    @ApiResponse(responseCode = "200", description = "Budget created or updated")
-    public BudgetResponse upsert(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @Valid @RequestBody BudgetUpsertRequest request
-    ) {
-        return budgetService.upsert(currentUser.id(), request);
-    }
+  @PutMapping
+  @Operation(
+      summary = "Create or update a budget",
+      description =
+          "Upserts by (categoryId, yearMonth). Returns 200 for both create and update (no 201).")
+  @ApiResponse(responseCode = "200", description = "Budget created or updated")
+  public BudgetResponse upsert(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @Valid @RequestBody BudgetUpsertRequest request) {
+    return budgetService.upsert(currentUser.id(), request);
+  }
 
-    @DeleteMapping("/{id}")
-    @ApiResponse(responseCode = "204", description = "Budget deleted")
-    public ResponseEntity<Void> delete(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        budgetService.delete(currentUser.id(), id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping("/{id}")
+  @ApiResponse(responseCode = "204", description = "Budget deleted")
+  public ResponseEntity<Void> delete(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    budgetService.delete(currentUser.id(), id);
+    return ResponseEntity.noContent().build();
+  }
 }

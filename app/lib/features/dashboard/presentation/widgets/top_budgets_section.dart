@@ -42,7 +42,7 @@ class TopBudgetsSection extends StatelessWidget {
         const SizedBox(height: 8),
         budgetsAsync.when(
           loading: () => const _SectionSkeleton(itemCount: 2),
-          error: (_, __) => _SectionError(onRetry: onRetry),
+          error: (_, _) => _SectionError(onRetry: onRetry),
           data: (budgets) {
             final top = _topBudgets(budgets);
             if (top.isEmpty) {

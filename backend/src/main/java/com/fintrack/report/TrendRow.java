@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public interface TrendRow {
 
-    String getYearMonth();
+  String getYearMonth();
 
-    BigDecimal getIncome();
+  BigDecimal getIncome();
 
-    BigDecimal getExpense();
+  BigDecimal getExpense();
 }

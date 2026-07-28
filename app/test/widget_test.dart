@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/core/network/dio_client.dart';
 import 'package:app/core/storage/token_storage.dart';
 import 'package:app/features/accounts/data/models/account_model.dart';
 import 'package:app/features/accounts/providers/accounts_provider.dart';
@@ -51,18 +52,18 @@ class _EmptyAccountsController extends AccountsController {
 class _FakeDashboardController extends DashboardController {
   @override
   Future<DashboardState> build() async {
-    return DashboardState(
+    return const DashboardState(
       summary: AsyncValue.data(
         SummaryModel(
           yearMonth: '2026-07',
           totalIncome: '0.00',
           totalExpense: '0.00',
           net: '0.00',
-          byAccount: const [],
+          byAccount: [],
         ),
       ),
-      budgets: const AsyncValue.data([]),
-      recentTransactions: const AsyncValue.data([]),
+      budgets: AsyncValue.data([]),
+      recentTransactions: AsyncValue.data([]),
     );
   }
 }

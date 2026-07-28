@@ -12,45 +12,42 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransactionMapper {
 
-    public TransactionResponse toResponse(Transaction transaction) {
-        Account account = transaction.getAccount();
-        Category category = transaction.getCategory();
-        Account transferAccount = transaction.getTransferAccount();
+  public TransactionResponse toResponse(Transaction transaction) {
+    Account account = transaction.getAccount();
+    Category category = transaction.getCategory();
+    Account transferAccount = transaction.getTransferAccount();
 
-        return TransactionResponse.builder()
-            .id(transaction.getId())
-            .type(transaction.getType())
-            .amount(formatAmount(transaction.getAmount()))
-            .date(transaction.getDate())
-            .accountId(account.getId())
-            .categoryId(category != null ? category.getId() : null)
-            .transferAccountId(transferAccount != null ? transferAccount.getId() : null)
-            .note(transaction.getNote())
-            .account(toAccountSummary(account))
-            .category(category != null ? toCategorySummary(category) : null)
-            .transferAccount(transferAccount != null ? toAccountSummary(transferAccount) : null)
-            .createdAt(transaction.getCreatedAt())
-            .updatedAt(transaction.getUpdatedAt())
-            .build();
-    }
+    return TransactionResponse.builder()
+        .id(transaction.getId())
+        .type(transaction.getType())
+        .amount(formatAmount(transaction.getAmount()))
+        .date(transaction.getDate())
+        .accountId(account.getId())
+        .categoryId(category != null ? category.getId() : null)
+        .transferAccountId(transferAccount != null ? transferAccount.getId() : null)
+        .note(transaction.getNote())
+        .account(toAccountSummary(account))
+        .category(category != null ? toCategorySummary(category) : null)
+        .transferAccount(transferAccount != null ? toAccountSummary(transferAccount) : null)
+        .createdAt(transaction.getCreatedAt())
+        .updatedAt(transaction.getUpdatedAt())
+        .build();
+  }
 
-    private TransactionAccountSummary toAccountSummary(Account account) {
-        return TransactionAccountSummary.builder()
-            .id(account.getId())
-            .name(account.getName())
-            .build();
-    }
+  private TransactionAccountSummary toAccountSummary(Account account) {
+    return TransactionAccountSummary.builder().id(account.getId()).name(account.getName()).build();
+  }
 
-    private TransactionCategorySummary toCategorySummary(Category category) {
-        return TransactionCategorySummary.builder()
-            .id(category.getId())
-            .name(category.getName())
-            .color(category.getColor())
-            .icon(category.getIcon())
-            .build();
-    }
+  private TransactionCategorySummary toCategorySummary(Category category) {
+    return TransactionCategorySummary.builder()
+        .id(category.getId())
+        .name(category.getName())
+        .color(category.getColor())
+        .icon(category.getIcon())
+        .build();
+  }
 
-    private String formatAmount(BigDecimal amount) {
-        return amount.setScale(2, RoundingMode.HALF_UP).toPlainString();
-    }
+  private String formatAmount(BigDecimal amount) {
+    return amount.setScale(2, RoundingMode.HALF_UP).toPlainString();
+  }
 }

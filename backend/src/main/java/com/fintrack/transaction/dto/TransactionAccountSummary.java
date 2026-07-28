@@ -14,6 +14,6 @@ import lombok.Setter;
 @Builder
 public class TransactionAccountSummary {
 
-    private UUID id;
-    private String name;
+  private UUID id;
+  private String name;
 }

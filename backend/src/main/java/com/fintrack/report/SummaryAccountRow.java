@@ -5,17 +5,17 @@ import java.util.UUID;
 
 public interface SummaryAccountRow {
 
-    UUID getAccountId();
+  UUID getAccountId();
 
-    String getName();
+  String getName();
 
-    BigDecimal getIncome();
+  BigDecimal getIncome();
 
-    BigDecimal getExpense();
+  BigDecimal getExpense();
 
-    BigDecimal getCurrentBalance();
+  BigDecimal getCurrentBalance();
 
-    BigDecimal getTotalIncome();
+  BigDecimal getTotalIncome();
 
-    BigDecimal getTotalExpense();
+  BigDecimal getTotalExpense();
 }

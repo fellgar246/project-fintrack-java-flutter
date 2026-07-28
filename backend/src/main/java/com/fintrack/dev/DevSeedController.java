@@ -16,16 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Dev")
 public class DevSeedController {
 
-    private final DevSeedService devSeedService;
+  private final DevSeedService devSeedService;
 
-    public DevSeedController(DevSeedService devSeedService) {
-        this.devSeedService = devSeedService;
-    }
+  public DevSeedController(DevSeedService devSeedService) {
+    this.devSeedService = devSeedService;
+  }
 
-    @PostMapping("/seed")
-    @Operation(description = "Seeds 6 months of sample transactions for the authenticated user (dev profile only).")
-    public Map<String, Object> seed(@AuthenticationPrincipal CurrentUser currentUser) {
-        int created = devSeedService.seedSampleData(currentUser.id());
-        return Map.of("transactionsCreated", created);
-    }
+  @PostMapping("/seed")
+  @Operation(
+      description =
+          "Seeds 6 months of sample transactions for the authenticated user (dev profile only).")
+  public Map<String, Object> seed(@AuthenticationPrincipal CurrentUser currentUser) {
+    int created = devSeedService.seedSampleData(currentUser.id());
+    return Map.of("transactionsCreated", created);
+  }
 }

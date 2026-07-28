@@ -33,7 +33,7 @@ class TransactionFormScreen extends ConsumerWidget {
     if (formState.isLoadingExisting) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(AppStrings.editTransactionTitle),
+          title: const Text(AppStrings.editTransactionTitle),
         ),
         body: const Center(child: CircularProgressIndicator()),
       );

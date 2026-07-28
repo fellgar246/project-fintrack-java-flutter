@@ -30,11 +30,10 @@ import lombok.Setter;
 @NamedEntityGraph(
     name = Transaction.WITH_RELATIONS,
     attributeNodes = {
-        @NamedAttributeNode("account"),
-        @NamedAttributeNode("category"),
-        @NamedAttributeNode("transferAccount")
-    }
-)
+      @NamedAttributeNode("account"),
+      @NamedAttributeNode("category"),
+      @NamedAttributeNode("transferAccount")
+    })
 @Getter
 @Setter
 @NoArgsConstructor
@@ -42,43 +41,43 @@ import lombok.Setter;
 @Builder
 public class Transaction {
 
-    public static final String WITH_RELATIONS = "Transaction.withRelations";
+  public static final String WITH_RELATIONS = "Transaction.withRelations";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+  @Column(name = "user_id", nullable = false)
+  private UUID userId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "account_id", nullable = false)
+  private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id")
+  private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transfer_account_id")
-    private Account transferAccount;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "transfer_account_id")
+  private Account transferAccount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private TransactionType type;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 10)
+  private TransactionType type;
 
-    @Column(nullable = false, precision = 14, scale = 2)
-    private BigDecimal amount;
+  @Column(nullable = false, precision = 14, scale = 2)
+  private BigDecimal amount;
 
-    @Column(nullable = false)
-    private LocalDate date;
+  @Column(nullable = false)
+  private LocalDate date;
 
-    @Column(length = 255)
-    private String note;
+  @Column(length = 255)
+  private String note;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+  @Column(name = "created_at", nullable = false)
+  private Instant createdAt;
 
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
+  @Column(name = "updated_at", nullable = false)
+  private Instant updatedAt;
 }

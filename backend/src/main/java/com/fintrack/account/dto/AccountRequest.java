@@ -18,14 +18,15 @@ import lombok.Setter;
 @Builder
 public class AccountRequest {
 
-    @NotBlank
-    @Size(max = 100)
-    private String name;
+  @NotBlank
+  @Size(max = 100)
+  private String name;
 
-    @NotNull
-    private AccountType type;
+  @NotNull private AccountType type;
 
-    @NotBlank
-    @Pattern(regexp = "^-?\\d+(\\.\\d{1,2})?$", message = "Must be a decimal amount with up to 2 fractional digits")
-    private String initialBalance;
+  @NotBlank
+  @Pattern(
+      regexp = "^-?\\d+(\\.\\d{1,2})?$",
+      message = "Must be a decimal amount with up to 2 fractional digits")
+  private String initialBalance;
 }

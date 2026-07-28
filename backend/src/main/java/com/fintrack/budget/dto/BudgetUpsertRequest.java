@@ -17,13 +17,11 @@ import lombok.Setter;
 @Builder
 public class BudgetUpsertRequest {
 
-    @NotNull
-    private UUID categoryId;
+  @NotNull private UUID categoryId;
 
-    @NotBlank
-    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$")
-    private String yearMonth;
+  @NotBlank
+  @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])$")
+  private String yearMonth;
 
-    @NotBlank
-    private String limitAmount;
+  @NotBlank private String limitAmount;
 }

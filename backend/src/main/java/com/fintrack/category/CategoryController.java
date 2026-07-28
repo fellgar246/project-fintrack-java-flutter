@@ -28,62 +28,56 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+  private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
+  public CategoryController(CategoryService categoryService) {
+    this.categoryService = categoryService;
+  }
 
-    @GetMapping
-    public List<CategoryResponse> list(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @RequestParam(required = false) CategoryKind kind,
-        @RequestParam(defaultValue = "false") boolean includeArchived
-    ) {
-        return categoryService.list(currentUser.id(), kind, includeArchived);
-    }
+  @GetMapping
+  public List<CategoryResponse> list(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @RequestParam(required = false) CategoryKind kind,
+      @RequestParam(defaultValue = "false") boolean includeArchived) {
+    return categoryService.list(currentUser.id(), kind, includeArchived);
+  }
 
-    @PostMapping
-    public ResponseEntity<CategoryResponse> create(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @Valid @RequestBody CategoryRequest request
-    ) {
-        CategoryResponse response = categoryService.create(currentUser.id(), request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+  @PostMapping
+  public ResponseEntity<CategoryResponse> create(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @Valid @RequestBody CategoryRequest request) {
+    CategoryResponse response = categoryService.create(currentUser.id(), request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
 
-    @GetMapping("/{id}")
-    public CategoryResponse getById(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        return categoryService.getById(currentUser.id(), id);
-    }
+  @GetMapping("/{id}")
+  public CategoryResponse getById(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    return categoryService.getById(currentUser.id(), id);
+  }
 
-    @PutMapping("/{id}")
-    @Operation(description = "Updates name, color and icon. `kind` is immutable and must not be changed.")
-    public CategoryResponse update(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id,
-        @Valid @RequestBody CategoryUpdateRequest request
-    ) {
-        return categoryService.update(currentUser.id(), id, request);
-    }
+  @PutMapping("/{id}")
+  @Operation(
+      description = "Updates name, color and icon. `kind` is immutable and must not be changed.")
+  public CategoryResponse update(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @PathVariable UUID id,
+      @Valid @RequestBody CategoryUpdateRequest request) {
+    return categoryService.update(currentUser.id(), id, request);
+  }
 
-    @DeleteMapping("/{id}")
-    @Operation(
-        summary = "Delete or archive a category",
-        description = """
+  @DeleteMapping("/{id}")
+  @Operation(
+      summary = "Delete or archive a category",
+      description =
+          """
             RB-02: if the category has any transactions or budgets it is archived (archived=true) \
             and hidden from the default list; otherwise it is physically deleted. Always returns 204.
-            """
-    )
-    @ApiResponse(responseCode = "204", description = "Category deleted or archived")
-    public ResponseEntity<Void> delete(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        categoryService.delete(currentUser.id(), id);
-        return ResponseEntity.noContent().build();
-    }
+            """)
+  @ApiResponse(responseCode = "204", description = "Category deleted or archived")
+  public ResponseEntity<Void> delete(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    categoryService.delete(currentUser.id(), id);
+    return ResponseEntity.noContent().build();
+  }
 }

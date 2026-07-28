@@ -174,7 +174,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
         Center(
           child: Column(
             children: [
-              Text(AppStrings.genericError, textAlign: TextAlign.center),
+              const Text(AppStrings.genericError, textAlign: TextAlign.center),
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: () => ref.read(transactionsListProvider.notifier).refresh(),

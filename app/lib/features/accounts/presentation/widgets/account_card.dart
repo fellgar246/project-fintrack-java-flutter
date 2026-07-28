@@ -103,8 +103,8 @@ class _TypeChip extends StatelessWidget {
           visualDensity: VisualDensity.compact,
         ),
         if (archived)
-          Chip(
-            label: const Text(AppStrings.archivedLabel),
+          const Chip(
+            label: Text(AppStrings.archivedLabel),
             visualDensity: VisualDensity.compact,
           ),
       ],

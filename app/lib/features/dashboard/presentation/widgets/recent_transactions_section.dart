@@ -34,7 +34,7 @@ class RecentTransactionsSection extends StatelessWidget {
         const SizedBox(height: 8),
         transactionsAsync.when(
           loading: () => const _SectionSkeleton(itemCount: 3),
-          error: (_, __) => _SectionError(onRetry: onRetry),
+          error: (_, _) => _SectionError(onRetry: onRetry),
           data: (transactions) {
             if (transactions.isEmpty) {
               return Text(

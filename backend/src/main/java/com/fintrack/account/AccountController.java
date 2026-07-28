@@ -27,61 +27,54 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Accounts")
 public class AccountController {
 
-    private final AccountService accountService;
+  private final AccountService accountService;
 
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+  public AccountController(AccountService accountService) {
+    this.accountService = accountService;
+  }
 
-    @GetMapping
-    public List<AccountResponse> list(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @RequestParam(defaultValue = "false") boolean includeArchived
-    ) {
-        return accountService.list(currentUser.id(), includeArchived);
-    }
+  @GetMapping
+  public List<AccountResponse> list(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @RequestParam(defaultValue = "false") boolean includeArchived) {
+    return accountService.list(currentUser.id(), includeArchived);
+  }
 
-    @PostMapping
-    public ResponseEntity<AccountResponse> create(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @Valid @RequestBody AccountRequest request
-    ) {
-        AccountResponse response = accountService.create(currentUser.id(), request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+  @PostMapping
+  public ResponseEntity<AccountResponse> create(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @Valid @RequestBody AccountRequest request) {
+    AccountResponse response = accountService.create(currentUser.id(), request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
 
-    @GetMapping("/{id}")
-    public AccountResponse getById(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        return accountService.getById(currentUser.id(), id);
-    }
+  @GetMapping("/{id}")
+  public AccountResponse getById(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    return accountService.getById(currentUser.id(), id);
+  }
 
-    @PutMapping("/{id}")
-    public AccountResponse update(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id,
-        @Valid @RequestBody AccountRequest request
-    ) {
-        return accountService.update(currentUser.id(), id, request);
-    }
+  @PutMapping("/{id}")
+  public AccountResponse update(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @PathVariable UUID id,
+      @Valid @RequestBody AccountRequest request) {
+    return accountService.update(currentUser.id(), id, request);
+  }
 
-    @DeleteMapping("/{id}")
-    @Operation(
-        summary = "Delete or archive an account",
-        description = """
+  @DeleteMapping("/{id}")
+  @Operation(
+      summary = "Delete or archive an account",
+      description =
+          """
             RB-02: if the account has any transactions (as source or transfer destination) it is \
             archived (archived=true) and hidden from the default list; otherwise it is physically \
             deleted from the database. Always returns 204.
-            """
-    )
-    @ApiResponse(responseCode = "204", description = "Account deleted or archived")
-    public ResponseEntity<Void> delete(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        accountService.delete(currentUser.id(), id);
-        return ResponseEntity.noContent().build();
-    }
+            """)
+  @ApiResponse(responseCode = "204", description = "Account deleted or archived")
+  public ResponseEntity<Void> delete(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    accountService.delete(currentUser.id(), id);
+    return ResponseEntity.noContent().build();
+  }
 }

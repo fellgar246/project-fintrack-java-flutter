@@ -31,53 +31,48 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Transactions")
 public class TransactionController {
 
-    private final TransactionService transactionService;
+  private final TransactionService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
+  public TransactionController(TransactionService transactionService) {
+    this.transactionService = transactionService;
+  }
 
-    @GetMapping
-    @Operation(
-        summary = "List transactions with pagination and filters",
-        description = """
+  @GetMapping
+  @Operation(
+      summary = "List transactions with pagination and filters",
+      description =
+          """
             Returns a stable paginated envelope. Sort always includes `id` as a tie-breaker. \
             `accountId` matches the source account or the transfer destination.
-            """
-    )
-    public TransactionPageResponse list(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "20") int size,
-        @RequestParam(defaultValue = "date,desc") String sort,
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
-        @RequestParam(required = false) UUID accountId,
-        @RequestParam(required = false) UUID categoryId,
-        @RequestParam(required = false) TransactionType type,
-        @RequestParam(required = false) String search
-    ) {
-        return transactionService.list(currentUser.id(), new TransactionService.TransactionListParams(
-            page,
-            size,
-            sort,
-            from,
-            to,
-            accountId,
-            categoryId,
-            type,
-            search
-        ));
-    }
+            """)
+  public TransactionPageResponse list(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "20") int size,
+      @RequestParam(defaultValue = "date,desc") String sort,
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+      @RequestParam(required = false) UUID accountId,
+      @RequestParam(required = false) UUID categoryId,
+      @RequestParam(required = false) TransactionType type,
+      @RequestParam(required = false) String search) {
+    return transactionService.list(
+        currentUser.id(),
+        new TransactionService.TransactionListParams(
+            page, size, sort, from, to, accountId, categoryId, type, search));
+  }
 
-    @PostMapping
-    @Operation(summary = "Create a transaction")
-    @ApiResponse(responseCode = "201", description = "Transaction created")
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-        content = @Content(
-            examples = @ExampleObject(
-                name = "Expense",
-                value = """
+  @PostMapping
+  @Operation(summary = "Create a transaction")
+  @ApiResponse(responseCode = "201", description = "Transaction created")
+  @io.swagger.v3.oas.annotations.parameters.RequestBody(
+      content =
+          @Content(
+              examples =
+                  @ExampleObject(
+                      name = "Expense",
+                      value =
+                          """
                     {
                       "type": "EXPENSE",
                       "amount": "1234.50",
@@ -87,47 +82,39 @@ public class TransactionController {
                       "transferAccountId": null,
                       "note": "Groceries"
                     }
-                    """
-            )
-        )
-    )
-    public ResponseEntity<TransactionResponse> create(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @Valid @RequestBody TransactionRequest request
-    ) {
-        TransactionResponse response = transactionService.create(currentUser.id(), request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+                    """)))
+  public ResponseEntity<TransactionResponse> create(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @Valid @RequestBody TransactionRequest request) {
+    TransactionResponse response = transactionService.create(currentUser.id(), request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
 
-    @GetMapping("/{id}")
-    public TransactionResponse getById(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        return transactionService.getById(currentUser.id(), id);
-    }
+  @GetMapping("/{id}")
+  public TransactionResponse getById(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    return transactionService.getById(currentUser.id(), id);
+  }
 
-    @PutMapping("/{id}")
-    @Operation(
-        summary = "Update a transaction",
-        description = "Allows changing the transaction type; all RB-03 rules are revalidated."
-    )
-    public TransactionResponse update(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id,
-        @Valid @RequestBody TransactionRequest request
-    ) {
-        return transactionService.update(currentUser.id(), id, request);
-    }
+  @PutMapping("/{id}")
+  @Operation(
+      summary = "Update a transaction",
+      description = "Allows changing the transaction type; all RB-03 rules are revalidated.")
+  public TransactionResponse update(
+      @AuthenticationPrincipal CurrentUser currentUser,
+      @PathVariable UUID id,
+      @Valid @RequestBody TransactionRequest request) {
+    return transactionService.update(currentUser.id(), id, request);
+  }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a transaction", description = "Hard delete (RB-04). Always returns 204.")
-    @ApiResponse(responseCode = "204", description = "Transaction deleted")
-    public ResponseEntity<Void> delete(
-        @AuthenticationPrincipal CurrentUser currentUser,
-        @PathVariable UUID id
-    ) {
-        transactionService.delete(currentUser.id(), id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping("/{id}")
+  @Operation(
+      summary = "Delete a transaction",
+      description = "Hard delete (RB-04). Always returns 204.")
+  @ApiResponse(responseCode = "204", description = "Transaction deleted")
+  public ResponseEntity<Void> delete(
+      @AuthenticationPrincipal CurrentUser currentUser, @PathVariable UUID id) {
+    transactionService.delete(currentUser.id(), id);
+    return ResponseEntity.noContent().build();
+  }
 }

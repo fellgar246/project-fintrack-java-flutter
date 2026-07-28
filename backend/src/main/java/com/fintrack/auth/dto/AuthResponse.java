@@ -13,6 +13,6 @@ import lombok.Setter;
 @Builder
 public class AuthResponse {
 
-    private UserResponse user;
-    private TokensResponse tokens;
+  private UserResponse user;
+  private TokensResponse tokens;
 }

@@ -16,21 +16,21 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
 
-    private String type;
-    private String title;
-    private int status;
-    private String detail;
-    private String instance;
-    private List<FieldError> errors;
+  private String type;
+  private String title;
+  private int status;
+  private String detail;
+  private String instance;
+  private List<FieldError> errors;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class FieldError {
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class FieldError {
 
-        private String field;
-        private String message;
-    }
+    private String field;
+    private String message;
+  }
 }

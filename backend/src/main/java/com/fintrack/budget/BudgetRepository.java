@@ -11,17 +11,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, UUID> {
 
-    Optional<Budget> findByIdAndUserId(UUID id, UUID userId);
+  Optional<Budget> findByIdAndUserId(UUID id, UUID userId);
 
-    Optional<Budget> findByUserIdAndCategoryIdAndYearMonth(
-        UUID userId,
-        UUID categoryId,
-        String yearMonth
-    );
+  Optional<Budget> findByUserIdAndCategoryIdAndYearMonth(
+      UUID userId, UUID categoryId, String yearMonth);
 
-    List<Budget> findByUserIdAndYearMonth(UUID userId, String yearMonth);
+  List<Budget> findByUserIdAndYearMonth(UUID userId, String yearMonth);
 
-    @Query(value = """
+  @Query(
+      value =
+          """
         SELECT b.id AS id,
                b.category_id AS categoryId,
                c.name AS categoryName,
@@ -44,15 +43,17 @@ public interface BudgetRepository extends JpaRepository<Budget, UUID> {
           AND b.year_month = :yearMonth
         GROUP BY b.id, b.category_id, c.name, c.color, c.icon, b.year_month, b.limit_amount
         ORDER BY c.name ASC
-        """, nativeQuery = true)
-    List<BudgetWithSpentRow> findAllWithSpentForMonth(
-        @Param("userId") UUID userId,
-        @Param("yearMonth") String yearMonth,
-        @Param("monthStart") java.time.LocalDate monthStart,
-        @Param("monthEnd") java.time.LocalDate monthEnd
-    );
+        """,
+      nativeQuery = true)
+  List<BudgetWithSpentRow> findAllWithSpentForMonth(
+      @Param("userId") UUID userId,
+      @Param("yearMonth") String yearMonth,
+      @Param("monthStart") java.time.LocalDate monthStart,
+      @Param("monthEnd") java.time.LocalDate monthEnd);
 
-    @Query(value = """
+  @Query(
+      value =
+          """
         SELECT b.id AS id,
                b.category_id AS categoryId,
                c.name AS categoryName,
@@ -74,11 +75,11 @@ public interface BudgetRepository extends JpaRepository<Budget, UUID> {
         WHERE b.user_id = :userId
           AND b.id = :budgetId
         GROUP BY b.id, b.category_id, c.name, c.color, c.icon, b.year_month, b.limit_amount
-        """, nativeQuery = true)
-    Optional<BudgetWithSpentRow> findOneWithSpent(
-        @Param("userId") UUID userId,
-        @Param("budgetId") UUID budgetId,
-        @Param("monthStart") java.time.LocalDate monthStart,
-        @Param("monthEnd") java.time.LocalDate monthEnd
-    );
+        """,
+      nativeQuery = true)
+  Optional<BudgetWithSpentRow> findOneWithSpent(
+      @Param("userId") UUID userId,
+      @Param("budgetId") UUID budgetId,
+      @Param("monthStart") java.time.LocalDate monthStart,
+      @Param("monthEnd") java.time.LocalDate monthEnd);
 }

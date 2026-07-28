@@ -16,11 +16,11 @@ import lombok.Setter;
 @Builder
 public class AccountResponse {
 
-    private UUID id;
-    private String name;
-    private AccountType type;
-    private String initialBalance;
-    private String currentBalance;
-    private boolean archived;
-    private Instant createdAt;
+  private UUID id;
+  private String name;
+  private AccountType type;
+  private String initialBalance;
+  private String currentBalance;
+  private boolean archived;
+  private Instant createdAt;
 }

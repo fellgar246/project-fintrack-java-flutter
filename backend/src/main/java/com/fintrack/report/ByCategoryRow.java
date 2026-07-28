@@ -5,13 +5,13 @@ import java.util.UUID;
 
 public interface ByCategoryRow {
 
-    UUID getCategoryId();
+  UUID getCategoryId();
 
-    String getName();
+  String getName();
 
-    String getColor();
+  String getColor();
 
-    String getIcon();
+  String getIcon();
 
-    BigDecimal getTotal();
+  BigDecimal getTotal();
 }

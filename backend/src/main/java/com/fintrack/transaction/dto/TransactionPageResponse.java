@@ -14,10 +14,10 @@ import lombok.Setter;
 @Builder
 public class TransactionPageResponse {
 
-    private List<TransactionResponse> content;
-    private int page;
-    private int size;
-    private long totalElements;
-    private int totalPages;
-    private boolean last;
+  private List<TransactionResponse> content;
+  private int page;
+  private int size;
+  private long totalElements;
+  private int totalPages;
+  private boolean last;
 }

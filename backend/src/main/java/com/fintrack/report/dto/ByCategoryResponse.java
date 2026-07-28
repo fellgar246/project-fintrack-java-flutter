@@ -15,10 +15,10 @@ import lombok.Setter;
 @Builder
 public class ByCategoryResponse {
 
-    private UUID categoryId;
-    private String name;
-    private String color;
-    private String icon;
-    private String total;
-    private BigDecimal percent;
+  private UUID categoryId;
+  private String name;
+  private String color;
+  private String icon;
+  private String total;
+  private BigDecimal percent;
 }

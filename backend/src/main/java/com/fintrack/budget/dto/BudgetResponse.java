@@ -17,12 +17,12 @@ import lombok.Setter;
 @Builder
 public class BudgetResponse {
 
-    private UUID id;
-    private TransactionCategorySummary category;
-    private String yearMonth;
-    private String limitAmount;
-    private String spentAmount;
-    private String remainingAmount;
-    private BigDecimal percentUsed;
-    private BudgetStatus status;
+  private UUID id;
+  private TransactionCategorySummary category;
+  private String yearMonth;
+  private String limitAmount;
+  private String spentAmount;
+  private String remainingAmount;
+  private BigDecimal percentUsed;
+  private BudgetStatus status;
 }

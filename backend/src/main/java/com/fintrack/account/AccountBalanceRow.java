@@ -5,22 +5,22 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
- * Projection for the RB-01 balance query: one row per account with currentBalance
- * computed in a single SQL pass (no N+1).
+ * Projection for the RB-01 balance query: one row per account with currentBalance computed in a
+ * single SQL pass (no N+1).
  */
 public interface AccountBalanceRow {
 
-    UUID getId();
+  UUID getId();
 
-    String getName();
+  String getName();
 
-    String getType();
+  String getType();
 
-    BigDecimal getInitialBalance();
+  BigDecimal getInitialBalance();
 
-    BigDecimal getCurrentBalance();
+  BigDecimal getCurrentBalance();
 
-    boolean getArchived();
+  boolean getArchived();
 
-    Instant getCreatedAt();
+  Instant getCreatedAt();
 }

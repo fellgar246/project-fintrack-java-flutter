@@ -17,17 +17,17 @@ import lombok.Setter;
 @Builder
 public class TransactionResponse {
 
-    private UUID id;
-    private TransactionType type;
-    private String amount;
-    private LocalDate date;
-    private UUID accountId;
-    private UUID categoryId;
-    private UUID transferAccountId;
-    private String note;
-    private TransactionAccountSummary account;
-    private TransactionCategorySummary category;
-    private TransactionAccountSummary transferAccount;
-    private Instant createdAt;
-    private Instant updatedAt;
+  private UUID id;
+  private TransactionType type;
+  private String amount;
+  private LocalDate date;
+  private UUID accountId;
+  private UUID categoryId;
+  private UUID transferAccountId;
+  private String note;
+  private TransactionAccountSummary account;
+  private TransactionCategorySummary category;
+  private TransactionAccountSummary transferAccount;
+  private Instant createdAt;
+  private Instant updatedAt;
 }
