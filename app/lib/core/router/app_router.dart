@@ -12,7 +12,8 @@ import '../../features/categories/presentation/categories_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/transactions/presentation/transaction_form_screen.dart';
 import '../../features/transactions/presentation/transactions_screen.dart';
-import '../../shared/widgets/placeholder_screen.dart';
+import '../../features/dashboard/presentation/dashboard_screen.dart';
+import '../../features/reports/presentation/reports_screen.dart';
 import '../../shared/widgets/splash_screen.dart';
 
 /// Navigation routes (§5.1 of the master plan). `/login`, `/register` and
@@ -73,8 +74,7 @@ GoRouter buildRouter(Ref ref) {
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/dashboard',
-            builder: (context, state) =>
-                const PlaceholderScreen(title: 'Dashboard'),
+            builder: (context, state) => const DashboardScreen(),
           ),
         ]),
         StatefulShellBranch(routes: [
@@ -104,8 +104,7 @@ GoRouter buildRouter(Ref ref) {
         StatefulShellBranch(routes: [
           GoRoute(
             path: '/reports',
-            builder: (context, state) =>
-                const PlaceholderScreen(title: 'Reportes'),
+            builder: (context, state) => const ReportsScreen(),
           ),
         ]),
         StatefulShellBranch(routes: [

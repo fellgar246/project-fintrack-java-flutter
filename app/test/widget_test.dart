@@ -1,11 +1,15 @@
 import 'dart:convert';
 
-import 'package:app/core/network/dio_client.dart';
 import 'package:app/core/storage/token_storage.dart';
+import 'package:app/features/accounts/data/models/account_model.dart';
+import 'package:app/features/accounts/providers/accounts_provider.dart';
+import 'package:app/features/dashboard/providers/dashboard_provider.dart';
+import 'package:app/features/reports/data/models/summary_model.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:app/main.dart';
 import 'package:app/shared/formatters/money_formatter.dart';
@@ -39,12 +43,45 @@ class _FakeLoggedInTokenStorage extends TokenStorage {
   Future<void> clear() async {}
 }
 
+class _EmptyAccountsController extends AccountsController {
+  @override
+  Future<List<AccountModel>> build() async => [];
+}
+
+class _FakeDashboardController extends DashboardController {
+  @override
+  Future<DashboardState> build() async {
+    return DashboardState(
+      summary: AsyncValue.data(
+        SummaryModel(
+          yearMonth: '2026-07',
+          totalIncome: '0.00',
+          totalExpense: '0.00',
+          net: '0.00',
+          byAccount: const [],
+        ),
+      ),
+      budgets: const AsyncValue.data([]),
+      recentTransactions: const AsyncValue.data([]),
+    );
+  }
+}
+
 Widget _loggedInApp() => ProviderScope(
-      overrides: [tokenStorageProvider.overrideWithValue(_FakeLoggedInTokenStorage())],
+      overrides: [
+        tokenStorageProvider.overrideWithValue(_FakeLoggedInTokenStorage()),
+        accountsControllerProvider.overrideWith(_EmptyAccountsController.new),
+        dashboardProvider.overrideWith(_FakeDashboardController.new),
+      ],
       child: const FintrackApp(),
     );
 
 void main() {
+  setUpAll(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await initializeDateFormatting('es');
+  });
+
   testWidgets('App arranca y muestra el dashboard con bottom nav',
       (WidgetTester tester) async {
     await tester.pumpWidget(_loggedInApp());
@@ -54,7 +91,7 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 
-  testWidgets('La bottom nav navega entre los 5 placeholders',
+  testWidgets('La bottom nav navega entre las 5 pestañas',
       (WidgetTester tester) async {
     await tester.pumpWidget(_loggedInApp());
     await tester.pumpAndSettle();

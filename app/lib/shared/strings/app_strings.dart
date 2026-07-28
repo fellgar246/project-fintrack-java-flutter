@@ -134,4 +134,20 @@ class AppStrings {
   static String budgetOver(String amount) => 'Te pasaste por $amount';
   static String deleteBudgetMessage(String name) =>
       '¿Eliminar el presupuesto de "$name"?';
+
+  // Dashboard
+  static const dashboardTitle = 'Dashboard';
+
+  // Reports
+  static const reportsTitle = 'Reportes';
+  static const reportsByCategory = 'Por categoría';
+  static const reportsTrend = 'Tendencia';
+  static const reportsNoData = 'No hay movimientos en este periodo';
+  static const exportCsvButton = 'Exportar CSV';
+  static const exportCsvProgress = 'Exportando…';
+  static const exportCsvTitle = 'Rango de exportación';
+  static const exportCsvFrom = 'Desde';
+  static const exportCsvTo = 'Hasta';
+  static const exportCsvSubject = 'Exportación Fintrack';
+  static String exportCsvSuccess(String path) => 'CSV guardado en $path';
 }

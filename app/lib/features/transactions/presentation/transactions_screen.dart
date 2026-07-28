@@ -9,6 +9,7 @@ import '../../../shared/formatters/date_formatter.dart';
 import '../../../shared/strings/app_strings.dart';
 import '../../accounts/providers/accounts_provider.dart';
 import '../../budgets/providers/budgets_provider.dart';
+import '../../dashboard/providers/dashboard_provider.dart';
 import '../data/models/transaction_model.dart';
 import '../data/transactions_api.dart';
 import '../providers/transaction_filters_provider.dart';
@@ -87,6 +88,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
       ref.read(transactionsListProvider.notifier).removeItem(transaction.id);
       ref.invalidate(accountsControllerProvider);
       ref.invalidate(budgetsProvider(yearMonthKey(ref.read(selectedBudgetMonthProvider))));
+      ref.invalidate(dashboardProvider);
       return true;
     } on ApiException catch (e) {
       if (!mounted) return false;

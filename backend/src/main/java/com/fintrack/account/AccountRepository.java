@@ -13,6 +13,8 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
 
   Optional<Account> findByIdAndUserId(UUID id, UUID userId);
 
+  List<Account> findByUserIdAndArchivedFalse(UUID userId);
+
   boolean existsByUserIdAndNameIgnoreCase(UUID userId, String name);
 
   boolean existsByUserIdAndNameIgnoreCaseAndIdNot(UUID userId, String name, UUID id);
@@ -24,16 +26,10 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
              a.initial_balance AS initialBalance,
              a.archived AS archived,
              a.created_at AS createdAt,
-             a.initial_balance
-           + COALESCE(SUM(CASE WHEN t.type = 'INCOME'   AND t.account_id = a.id THEN t.amount END), 0)
-           - COALESCE(SUM(CASE WHEN t.type = 'EXPENSE'  AND t.account_id = a.id THEN t.amount END), 0)
-           - COALESCE(SUM(CASE WHEN t.type = 'TRANSFER' AND t.account_id = a.id THEN t.amount END), 0)
-           + COALESCE(SUM(CASE WHEN t.type = 'TRANSFER' AND t.transfer_account_id = a.id THEN t.amount END), 0)
+             """ + AccountBalanceSql.CURRENT_BALANCE_EXPR + """
              AS currentBalance
       FROM accounts a
-      LEFT JOIN transactions t
-             ON (t.account_id = a.id OR t.transfer_account_id = a.id)
-            AND t.user_id = a.user_id
+      """ + AccountBalanceSql.TRANSACTION_JOIN + """
       WHERE a.user_id = :userId
         AND (:includeArchived = true OR a.archived = false)
       GROUP BY a.id, a.name, a.type, a.initial_balance, a.archived, a.created_at
@@ -50,16 +46,10 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
              a.initial_balance AS initialBalance,
              a.archived AS archived,
              a.created_at AS createdAt,
-             a.initial_balance
-           + COALESCE(SUM(CASE WHEN t.type = 'INCOME'   AND t.account_id = a.id THEN t.amount END), 0)
-           - COALESCE(SUM(CASE WHEN t.type = 'EXPENSE'  AND t.account_id = a.id THEN t.amount END), 0)
-           - COALESCE(SUM(CASE WHEN t.type = 'TRANSFER' AND t.account_id = a.id THEN t.amount END), 0)
-           + COALESCE(SUM(CASE WHEN t.type = 'TRANSFER' AND t.transfer_account_id = a.id THEN t.amount END), 0)
+             """ + AccountBalanceSql.CURRENT_BALANCE_EXPR + """
              AS currentBalance
       FROM accounts a
-      LEFT JOIN transactions t
-             ON (t.account_id = a.id OR t.transfer_account_id = a.id)
-            AND t.user_id = a.user_id
+      """ + AccountBalanceSql.TRANSACTION_JOIN + """
       WHERE a.user_id = :userId
         AND a.id = :accountId
       GROUP BY a.id, a.name, a.type, a.initial_balance, a.archived, a.created_at
