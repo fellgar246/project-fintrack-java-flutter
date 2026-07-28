@@ -1,0 +1,331 @@
+@host = http://localhost:8080/api/v1
+@email = demo@fintrack.local
+@password = demo12345
+
+### Health (public)
+GET {{host}}/actuator/health
+
+### Register
+# @name register
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "name": "Demo User"
+}
+
+### Login (captures tokens)
+# @name login
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+@token = {{login.response.body.tokens.accessToken}}
+@refreshToken = {{login.response.body.tokens.refreshToken}}
+
+### Refresh token
+# @name refresh
+POST {{host}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+@token = {{refresh.response.body.accessToken}}
+@refreshToken = {{refresh.response.body.refreshToken}}
+
+###
+# Accounts
+###
+
+### Create cash account
+# @name createCashAccount
+POST {{host}}/accounts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Efectivo",
+  "type": "CASH",
+  "initialBalance": "5000.00"
+}
+
+@cashAccountId = {{createCashAccount.response.body.id}}
+
+### Create debit account (transfer destination)
+# @name createDebitAccount
+POST {{host}}/accounts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Débito BBVA",
+  "type": "DEBIT",
+  "initialBalance": "12000.00"
+}
+
+@debitAccountId = {{createDebitAccount.response.body.id}}
+
+### List accounts (with computed balances)
+GET {{host}}/accounts
+Authorization: Bearer {{token}}
+
+### Get account by id
+GET {{host}}/accounts/{{cashAccountId}}
+Authorization: Bearer {{token}}
+
+### Update account
+PUT {{host}}/accounts/{{cashAccountId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Efectivo (cartera)",
+  "type": "CASH",
+  "initialBalance": "5000.00"
+}
+
+###
+# Categories (default categories are seeded on register)
+###
+
+### List expense categories
+# @name listExpenseCategories
+GET {{host}}/categories?kind=EXPENSE
+Authorization: Bearer {{token}}
+
+@expenseCategoryId = {{listExpenseCategories.response.body.$[0].id}}
+
+### List income categories
+# @name listIncomeCategories
+GET {{host}}/categories?kind=INCOME
+Authorization: Bearer {{token}}
+
+@incomeCategoryId = {{listIncomeCategories.response.body.$[0].id}}
+
+### Create custom expense category
+# @name createCategory
+POST {{host}}/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Café",
+  "kind": "EXPENSE",
+  "color": "#795548",
+  "icon": "local_cafe"
+}
+
+@customCategoryId = {{createCategory.response.body.id}}
+
+### Get category by id
+GET {{host}}/categories/{{customCategoryId}}
+Authorization: Bearer {{token}}
+
+### Update category
+PUT {{host}}/categories/{{customCategoryId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Café y snacks",
+  "color": "#6D4C41",
+  "icon": "coffee"
+}
+
+###
+# Transactions
+###
+
+### Create expense
+# @name createExpense
+POST {{host}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "EXPENSE",
+  "amount": "349.50",
+  "date": "2026-07-25",
+  "accountId": "{{cashAccountId}}",
+  "categoryId": "{{customCategoryId}}",
+  "note": "Café La Parroquia"
+}
+
+@expenseTxId = {{createExpense.response.body.id}}
+
+### Create income
+# @name createIncome
+POST {{host}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "INCOME",
+  "amount": "18500.00",
+  "date": "2026-07-01",
+  "accountId": "{{debitAccountId}}",
+  "categoryId": "{{incomeCategoryId}}",
+  "note": "Nómina julio"
+}
+
+@incomeTxId = {{createIncome.response.body.id}}
+
+### Create transfer (single row, RB-03)
+# @name createTransfer
+POST {{host}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "TRANSFER",
+  "amount": "1500.00",
+  "date": "2026-07-20",
+  "accountId": "{{debitAccountId}}",
+  "transferAccountId": "{{cashAccountId}}",
+  "note": "Retiro ATM"
+}
+
+@transferTxId = {{createTransfer.response.body.id}}
+
+### List transactions (paginated, filtered)
+GET {{host}}/transactions?page=0&size=10&sort=date,desc&type=EXPENSE&from=2026-07-01&to=2026-07-31
+Authorization: Bearer {{token}}
+
+### Get transaction by id
+GET {{host}}/transactions/{{expenseTxId}}
+Authorization: Bearer {{token}}
+
+### Update transaction
+PUT {{host}}/transactions/{{expenseTxId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "EXPENSE",
+  "amount": "399.00",
+  "date": "2026-07-25",
+  "accountId": "{{cashAccountId}}",
+  "categoryId": "{{customCategoryId}}",
+  "note": "Café + pan dulce"
+}
+
+###
+# Budgets
+###
+
+### Upsert budget for current month
+# @name upsertBudget
+PUT {{host}}/budgets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "categoryId": "{{customCategoryId}}",
+  "yearMonth": "2026-07",
+  "limitAmount": "800.00"
+}
+
+@budgetId = {{upsertBudget.response.body.id}}
+
+### List budgets for July 2026
+GET {{host}}/budgets?yearMonth=2026-07&includeUnbudgeted=true
+Authorization: Bearer {{token}}
+
+###
+# Reports
+###
+
+### Monthly summary
+GET {{host}}/reports/summary?yearMonth=2026-07
+Authorization: Bearer {{token}}
+
+### By category (expenses)
+GET {{host}}/reports/by-category?yearMonth=2026-07&kind=EXPENSE
+Authorization: Bearer {{token}}
+
+### 6-month trend
+GET {{host}}/reports/trend?months=6
+Authorization: Bearer {{token}}
+
+### Export CSV
+GET {{host}}/reports/export?from=2026-07-01&to=2026-07-31
+Authorization: Bearer {{token}}
+
+###
+# Error cases (document the contract)
+###
+
+### Duplicate email → 409 Conflict
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "name": "Duplicate"
+}
+
+### Negative amount → 400 Bad Request
+POST {{host}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "EXPENSE",
+  "amount": "-100.00",
+  "date": "2026-07-26",
+  "accountId": "{{cashAccountId}}",
+  "categoryId": "{{customCategoryId}}"
+}
+
+### Transfer with category → 422 Business Rule
+POST {{host}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "type": "TRANSFER",
+  "amount": "500.00",
+  "date": "2026-07-26",
+  "accountId": "{{cashAccountId}}",
+  "categoryId": "{{customCategoryId}}",
+  "transferAccountId": "{{debitAccountId}}"
+}
+
+###
+# Cleanup (optional — run after exploring responses)
+###
+
+### Delete budget
+DELETE {{host}}/budgets/{{budgetId}}
+Authorization: Bearer {{token}}
+
+### Delete transactions (hard delete)
+DELETE {{host}}/transactions/{{expenseTxId}}
+Authorization: Bearer {{token}}
+
+DELETE {{host}}/transactions/{{incomeTxId}}
+Authorization: Bearer {{token}}
+
+DELETE {{host}}/transactions/{{transferTxId}}
+Authorization: Bearer {{token}}
+
+### Delete custom category (hard delete if unused)
+DELETE {{host}}/categories/{{customCategoryId}}
+Authorization: Bearer {{token}}
+
+### Logout (revokes refresh token)
+POST {{host}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
